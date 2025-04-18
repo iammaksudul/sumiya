@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sumiya - AI DevOps Assistant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold text-gray-800">Sumiya</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span class="text-gray-600">Welcome, Kh Maksudul Alam</span>
+                    <a href="/auth/logout" class="text-red-600 hover:text-red-800">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <!-- Chat Interface -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <div id="chat-messages" class="h-96 overflow-y-auto mb-4 space-y-4">
+                <!-- Welcome Message -->
+                <div class="flex items-start space-x-3">
+                    <div class="flex-shrink-0">
+                        <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
+                            <i class="fas fa-robot text-white"></i>
+                        </div>
+                    </div>
+                    <div class="flex-1 bg-gray-100 rounded-lg p-4">
+                        <p class="text-gray-800">
+                            Hello Kh Maksudul Alam! I'm Sumiya, your AI DevOps Assistant. I can help you with:
+                            <ul class="list-disc list-inside mt-2">
+                                <li>Generating Linux commands and scripts</li>
+                                <li>Creating CI/CD pipelines</li>
+                                <li>Managing system configurations</li>
+                                <li>Monitoring system performance</li>
+                                <li>And much more!</li>
+                            </ul>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex space-x-4">
+                <input type="text" id="user-input" 
+                       class="flex-1 border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                       placeholder="Type your message here...">
+                <button onclick="sendMessage()" 
+                        class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    Send
+                </button>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Command Generator -->
+            <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
+                <div class="text-blue-500 mb-4">
+                    <i class="fas fa-terminal text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Command Generator</h3>
+                <p class="text-gray-600 mb-4">Generate Linux commands and scripts for common tasks</p>
+                <button onclick="quickAction('command')" 
+                        class="text-blue-500 hover:text-blue-600">
+                    Try it <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+
+            <!-- CI/CD Helper -->
+            <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
+                <div class="text-green-500 mb-4">
+                    <i class="fas fa-code-branch text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">CI/CD Helper</h3>
+                <p class="text-gray-600 mb-4">Create and optimize CI/CD pipelines</p>
+                <button onclick="quickAction('cicd')" 
+                        class="text-green-500 hover:text-green-600">
+                    Try it <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+
+            <!-- System Admin -->
+            <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
+                <div class="text-purple-500 mb-4">
+                    <i class="fas fa-server text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">System Admin</h3>
+                <p class="text-gray-600 mb-4">Get help with system configurations</p>
+                <button onclick="quickAction('system')" 
+                        class="text-purple-500 hover:text-purple-600">
+                    Try it <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+
+            <!-- Monitoring -->
+            <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
+                <div class="text-red-500 mb-4">
+                    <i class="fas fa-chart-line text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Monitoring</h3>
+                <p class="text-gray-600 mb-4">Set up system monitoring and alerts</p>
+                <button onclick="quickAction('monitoring')" 
+                        class="text-red-500 hover:text-red-600">
+                    Try it <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white shadow-lg mt-8">
+        <div class="max-w-7xl mx-auto px-4 py-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="text-gray-600 mb-4 md:mb-0">
+                    <p>Created by <a href="https://github.com/iammaksudul" class="text-blue-500 hover:text-blue-600">Kh Maksudul Alam</a></p>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="https://github.com/iammaksudul" class="text-gray-600 hover:text-gray-800">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/khmaksudulalam" class="text-gray-600 hover:text-gray-800">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://www.facebook.com/kh.Maksudulalam" class="text-gray-600 hover:text-gray-800">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="https://www.instagram.com/kh.maksudulalam" class="text-gray-600 hover:text-gray-800">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Chat functionality
+        function sendMessage() {
+            const input = document.getElementById('user-input');
+            const message = input.value.trim();
+            if (!message) return;
+
+            // Add user message
+            addMessage(message, 'user');
+            input.value = '';
+
+            // Send to backend
+            fetch('/api/v1/assistant/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                addMessage(data.response, 'assistant');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                addMessage('Sorry, there was an error processing your request.', 'assistant');
+            });
+        }
+
+        function addMessage(message, sender) {
+            const messagesDiv = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'flex items-start space-x-3';
+            
+            const icon = sender === 'user' ? 'fa-user' : 'fa-robot';
+            const bgColor = sender === 'user' ? 'bg-green-500' : 'bg-blue-500';
+            
+            messageDiv.innerHTML = `
+                <div class="flex-shrink-0">
+                    <div class="w-8 h-8 rounded-full ${bgColor} flex items-center justify-center">
+                        <i class="fas ${icon} text-white"></i>
+                    </div>
+                </div>
+                <div class="flex-1 bg-gray-100 rounded-lg p-4">
+                    <p class="text-gray-800">${message}</p>
+                </div>
+            `;
+            
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function quickAction(action) {
+            const prompts = {
+                command: "Generate a command to list all running processes sorted by memory usage",
+                cicd: "Create a GitHub Actions workflow for a Python application",
+                system: "How do I configure systemd services in AlmaLinux?",
+                monitoring: "Create a monitoring script for server resources"
+            };
+            
+            document.getElementById('user-input').value = prompts[action];
+            sendMessage();
+        }
+
+        // Handle Enter key
+        document.getElementById('user-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html> 
